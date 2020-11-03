@@ -36,16 +36,30 @@ per_T=$(awk "BEGIN{ print ( $t / $n ) * 100}")
 singlet_per[H]=$per_H
 singlet_per[T]=$per_T
 
+max=0
+
 for k in ${!singlet_per[@]}
 do
 	echo "$k :" ${singlet_per[$k]}"%"
+	if (( $max < ${singlet_per[$k]} ))
+	then
+		max=${singlet_per[$k]}
+	fi
+done
+echo "And The Winning Combination is:"
+for k in ${!singlet_per[@]}
+do
+        if (( $max == ${singlet_per[$k]} ))
+        then
+                echo $k "Appears:" $max "% times"
+        fi
 done
 
 echo "***********************************************************************"
 echo "Flipping for Doublet"
 
 for (( f=1; f<=n; f++ ))
-do	
+do
         flip1=$((RANDOM%2))
 	flip2=$((RANDOM%2))
         if (( $flip1 == 1 & $flip2 == 1 ))
@@ -94,6 +108,25 @@ doublet_per[TT]=$per_TT
 for k in ${!doublet_per[@]}
 do
         echo "$k :" ${doublet_per[$k]}"%"
+done
+
+max=0
+
+for k in ${!doublet_per[@]}
+do
+        echo "$k :" ${doublet_per[$k]}"%"
+        if (( $max < ${doublet_per[$k]} ))
+        then
+                max=${doublet_per[$k]}
+        fi
+done
+echo "And The Winning Combination is:"
+for k in ${!doublet_per[@]}
+do
+        if (( $max == ${doublet_per[$k]} ))
+        then
+                echo $k "Appears:" $max "% times"
+        fi
 done
 
 echo "***********************************************************************"
@@ -187,4 +220,23 @@ triplet_per[TTT]=$per_TTT
 for k in ${!triplet_per[@]}
 do
         echo "$k :" ${triplet_per[$k]}"%"
+done
+
+max=0
+
+for k in ${!triplet_per[@]}
+do
+        echo "$k :" ${triplet_per[$k]}"%"
+        if (( $max < ${triplet_per[$k]} ))
+        then
+                max=${triplet_per[$k]}
+        fi
+done
+echo "And The Winning Combination is:"
+for k in ${!triplet_per[@]}
+do
+        if (( $max == ${triplet_per[$k]} ))
+        then
+                echo $k "Appears:" $max "% times"
+        fi
 done
